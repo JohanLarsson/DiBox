@@ -1,8 +1,8 @@
 ﻿namespace WpfApp
 {
     using System;
+    using System.ComponentModel;
     using System.Windows;
-    using System.Windows.Threading;
     using Ninject;
 
     public static class DataContext
@@ -27,12 +27,14 @@
 
         private static void OnTypeChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
+            if (DesignerProperties.GetIsInDesignMode(d))
+            {
+                return;
+            }
+
             if (e.NewValue is Type type)
             {
-                // A delay is needed for datacontext inhertitance to work iirc.
-                d.Dispatcher.BeginInvoke(
-                    DispatcherPriority.DataBind,
-                    new Action(() => d.SetValue(FrameworkElement.DataContextProperty, App.Kernel?.Get(type))));
+                d.SetValue(FrameworkElement.DataContextProperty, App.Kernel?.Get(type));
             }
             else
             {
