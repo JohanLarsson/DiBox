@@ -7,9 +7,10 @@
         Title="MainWindow"
         Width="525"
         Height="350"
+        d:DataContext="{d:DesignInstance local:ViewModel}"
         DataContext="{local:Get {x:Type local:ViewModel}}"
         mc:Ignorable="d">
     <Grid>
-        <TextBox Text="{Binding Text}" />
+        <TextBox Text="{Binding Foo.Text}" />
     </Grid>
 </Window>

@@ -5,25 +5,14 @@
 
     public class ViewModel : INotifyPropertyChanged
     {
-        private string text = "abc";
-
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public string Text
+        public ViewModel(Foo foo)
         {
-            get => this.text;
-
-            set
-            {
-                if (value == this.text)
-                {
-                    return;
-                }
-
-                this.text = value;
-                this.OnPropertyChanged();
-            }
+            Foo = foo;
         }
+
+        public Foo Foo { get; }
 
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
