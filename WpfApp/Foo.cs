@@ -9,6 +9,8 @@ namespace WpfApp
 
         public event PropertyChangedEventHandler PropertyChanged;
 
+        public static Foo Instance { get; } = new Foo();
+
         public string Text
         {
             get => this.text;

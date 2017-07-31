@@ -7,10 +7,16 @@
         Title="MainWindow"
         Width="525"
         Height="350"
-        d:DataContext="{d:DesignInstance local:ViewModel}"
-        DataContext="{local:Get {x:Type local:ViewModel}}"
+        DataContext="{local:Get {x:Type local:ViewModel}, True}"
         mc:Ignorable="d">
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition />
+        </Grid.RowDefinitions>
         <TextBox Text="{Binding Foo.Text}" />
+        <Border Grid.Row="1" DataContext="{x:Null}">
+            <local:FooView />
+        </Border>
     </Grid>
 </Window>

@@ -7,9 +7,14 @@
 
     using Ninject;
 
+    [MarkupExtensionReturnType(typeof(object))]
     public class GetExtension : MarkupExtension
     {
         private static readonly DependencyObject DependencyObject = new DependencyObject();
+
+        public GetExtension()
+        {
+        }
 
         public GetExtension(Type type)
             : this(type, false)
@@ -32,13 +37,24 @@
 
         public override object ProvideValue(IServiceProvider serviceProvider)
         {
-            if (this.Type == null ||
-                (!this.IsDesignTimeCreatable && IsInDesignMode))
+            if (this.Type == null)
             {
                 return null;
             }
 
-            return App.Kernel?.Get(this.Type);
+            if (IsInDesignMode)
+            {
+                if (IsDesignTimeCreatable)
+                {
+                    return App.Kernel?.Get(this.Type);
+                }
+
+                return null;
+            }
+            else
+            {
+                return App.Kernel?.Get(this.Type);
+            }
         }
     }
 }
